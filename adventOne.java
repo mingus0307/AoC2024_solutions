@@ -4,7 +4,9 @@ import java.io.*;
 
 public class adventOne {
 
-    
+    /**
+    * this class stores the two lists and implements of the used methods
+    */
     public static class Pair {
         List<Integer> first = new ArrayList<>(); 
         List<Integer> second = new ArrayList<>();
@@ -15,10 +17,12 @@ public class adventOne {
             Collections.sort(first);
             Collections.sort(second);
         } 
-
+        /**
+        * determines the distance between the two numbers 
+        * @return    sum     the distances of each pair in the lists added up
+        */
         public int determineDistance(){
-            int sum = 0; 
-            
+            int sum = 0;
             for (int i = 0; i < first.size(); i++) {
                 int distance = (first.get(i) - second.get(i));
                 sum += Math.abs(distance); 
