@@ -5,11 +5,13 @@ public class Reports {
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("This is the number of save reports: " + saveReports()); 
+        System.out.println("This is the number of barely save reports: " + saveReports()); 
     }
 
     public static int saveReports() throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("text.txt"));
-        int saveReps = 0;  
+        int saveReps = 0; 
+        int barelySave = 0; 
         
         //take the report out of the file and add them to a list; 
         while (scanner.hasNextLine()) {
@@ -21,16 +23,18 @@ public class Reports {
                 lineArray.add(Integer.parseInt(num));
             }
 
-            System.out.println(lineArray); 
-            if (analyze(lineArray)) {
+           // System.out.println(lineArray); 
+            if (analyzeNotSoStrict(lineArray)) {
                 saveReps++; 
-            }
+                barelySave++;
+            } 
         }
-        
-
-        return saveReps; 
+        return barelySave; 
     }
-
+    
+    /**
+     * analyzes if the input is save (definiton of the first part)
+     */ 
     public static boolean analyze(List<Integer> line) {
         //we have the list with the current report 
         //lets go analyze it 
@@ -61,4 +65,26 @@ public class Reports {
         return isSave; 
 
     }
+    public static boolean analyzeNotSoStrict(List<Integer> line) {
+        // if its already right, return true
+        if (analyze(line)) {
+            return true; 
+        }
+
+        // try to kick every single level 
+        for (int i = 0; i < line.size(); i++) {
+            // copy to save the original
+            List<Integer> modifiedLine = new ArrayList<>(line);
+            modifiedLine.remove(i); 
+
+            // check if modified is save 
+            if (analyze(modifiedLine)) {
+                return true; 
+            }
+        }
+
+        
+        return false;
+    }
+
 }
